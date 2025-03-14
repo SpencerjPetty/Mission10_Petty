@@ -17,7 +17,10 @@ namespace Mission10.Controllers
         [HttpGet(Name = "GetBowlers")]
         public IEnumerable<Bowler> GetBowlers()
         {
-            var bowlerList = _repo.Bowlers.ToList();
+            var bowlerList = _repo.Bowlers
+            .Where(b => b.Team != null && (b.Team!.TeamName == "Marlins" || b.Team.TeamName == "Sharks"))
+            .ToList();
+
             return bowlerList;
         }
     }

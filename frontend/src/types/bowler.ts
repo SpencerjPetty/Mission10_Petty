@@ -1,3 +1,9 @@
+export type team = {
+  teamId: number;
+  teamName: string;
+  captainId: number | null;
+};
+
 export type bowler = {
   bowlerId: number;
   bowlerLastName: string | null;
@@ -9,6 +15,5 @@ export type bowler = {
   bowlerZip: string | null;
   bowlerPhoneNumber: string | null;
   teamId: number | null;
-  // bowlerScores: bowlerScore[]; // Assuming bowlerScore type exists
-  // team: team | null; // Assuming team type exists
+  team: team | null; // ✅ Add this to match the JSON structure
 };

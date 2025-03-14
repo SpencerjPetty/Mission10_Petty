@@ -2,13 +2,18 @@ import { useEffect, useState } from 'react';
 import { bowler } from './types/bowler';
 
 function BowlerInfo() {
-  const [bowler, setBowler] = useState<bowler[]>([]);
+  const [bowlers, setBowlers] = useState<bowler[]>([]); // ✅ Fixed state variable name
 
   useEffect(() => {
     const getBowlerInfo = async () => {
-      const response = await fetch('https://localhost:5000/bowler');
-      const data = await response.json();
-      setBowler(data);
+      try {
+        const response = await fetch('https://localhost:5000/api/BowlerInfo');
+        if (!response.ok) throw new Error('Failed to fetch bowler data');
+        const data = await response.json();
+        setBowlers(data);
+      } catch (error) {
+        console.error('Error fetching bowler info:', error);
+      }
     };
 
     getBowlerInfo();
@@ -18,32 +23,34 @@ function BowlerInfo() {
     <>
       <h1>Bowler Info</h1>
       <table>
-        <tr>
-          <th>Bowler ID</th>
-          <th>Bowler Last Name</th>
-          <th>Bowler First Name</th>
-          <th>Bowler Middle Init</th>
-          <th>Bowler Address</th>
-          <th>Bowler City</th>
-          <th>Bowler State</th>
-          <th>Bowler Zip</th>
-          <th>Bowler Phone Number</th>
-          <th>Team ID</th>
-        </tr>
-        {bowler.map((bowler) => (
-          <tr key={bowler.bowlerId}>
-            <td>{bowler.bowlerId}</td>
-            <td>{bowler.bowlerLastName}</td>
-            <td>{bowler.bowlerFirstName}</td>
-            <td>{bowler.bowlerMiddleInit}</td>
-            <td>{bowler.bowlerAddress}</td>
-            <td>{bowler.bowlerCity}</td>
-            <td>{bowler.bowlerState}</td>
-            <td>{bowler.bowlerZip}</td>
-            <td>{bowler.bowlerPhoneNumber}</td>
-            <td>{bowler.teamId}</td>
+        <thead>
+          <tr>
+            <th>Bowler Name</th>
+            <th>Team Name</th> {/* ✅ Changed from Team ID to Team Name */}
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Phone Number</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {bowlers.map((bowler) => (
+            <tr key={bowler.bowlerId}>
+              <td>
+                {bowler.bowlerFirstName} {bowler.bowlerMiddleInit}{' '}
+                {bowler.bowlerLastName}
+              </td>
+              <td>{bowler.team ? bowler.team.teamName : 'No Team'}</td>{' '}
+              {/* ✅ Display team name or "No Team" */}
+              <td>{bowler.bowlerAddress}</td>
+              <td>{bowler.bowlerCity}</td>
+              <td>{bowler.bowlerState}</td>
+              <td>{bowler.bowlerZip}</td>
+              <td>{bowler.bowlerPhoneNumber}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </>
   );
