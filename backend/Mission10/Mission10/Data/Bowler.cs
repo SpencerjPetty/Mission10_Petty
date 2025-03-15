@@ -26,6 +26,7 @@ public class Bowler
 
     // Foreign key reference to Team
     [ForeignKey("Team")]
-    public int? TeamId { get; set; }
-    public Team? Team { get; set; }
+    public int TeamId { get; set; }
+
+    public Team Team { get; set; }
 }

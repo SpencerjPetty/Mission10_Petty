@@ -127,8 +127,7 @@
           },
           "teamId": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "team": {
             "$ref": "#/components/schemas/Team"

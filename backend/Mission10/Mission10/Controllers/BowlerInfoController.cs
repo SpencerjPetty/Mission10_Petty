@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission10.Data;
 
 namespace Mission10.Controllers
@@ -18,10 +19,13 @@ namespace Mission10.Controllers
         public IEnumerable<Bowler> GetBowlers()
         {
             var bowlerList = _repo.Bowlers
-            .Where(b => b.Team != null && (b.Team!.TeamName == "Marlins" || b.Team.TeamName == "Sharks"))
-            .ToList();
+                .AsNoTracking() // Prevent EF Core from messing with tracked entities
+                .Include(b => b.Team)
+                .Where(b => b.Team != null && (b.Team.TeamName == "Marlins" || b.Team.TeamName == "Sharks"))
+                .ToList();
 
             return bowlerList;
         }
+
     }
 }

@@ -41,8 +41,7 @@ function BowlerInfo() {
                 {bowler.bowlerFirstName} {bowler.bowlerMiddleInit}{' '}
                 {bowler.bowlerLastName}
               </td>
-              <td>{bowler.team ? bowler.team.teamName : 'No Team'}</td>{' '}
-              {/* ✅ Display team name or "No Team" */}
+              <td>{bowler.team ? bowler.team.teamName : 'No Team'}</td>
               <td>{bowler.bowlerAddress}</td>
               <td>{bowler.bowlerCity}</td>
               <td>{bowler.bowlerState}</td>

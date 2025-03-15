@@ -20,7 +20,9 @@ public partial class BowlingLeagueContext : DbContext
     public DbSet<Team> Teams { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source=BowlingLeague.sqlite");
+    {
+        optionsBuilder.UseSqlite("Data Source=BowlingLeague.sqlite");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
